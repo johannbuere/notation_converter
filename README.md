@@ -1,7 +1,7 @@
 # Notation Converter (nota.c)
 
 ## 📌 Description
-**`nota.c`** is a C program that converts arithmetic expressions between **infix**, **prefix**, and **postfix** notations. It uses **expression trees** to perform the conversion and display a **visual representation** of the tree. The program is designed with error handling, interactive mode, and suggestion features for user input.
+**`nota`** is a C program that converts arithmetic expressions between **infix**, **prefix**, and **postfix** notations. It uses **expression trees** to perform the conversion and display a **visual representation** of the tree. The program is designed with error handling, interactive mode, and suggestion features for user input.
 
 ---
 
