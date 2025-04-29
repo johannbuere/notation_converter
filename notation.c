@@ -76,10 +76,12 @@ Node* buildTreeFromPostfix(const char* expr) {
     char* tok = strtok(exprCopy, " ");
 
     while (tok) {
+  
         if (!isValidToken(tok)) {
             printf("Error: Invalid token '%s'.\n", tok);
             return NULL;
         }
+
 
         if (isOperator(tok)) {
             Node* right = popNode(&stack);
@@ -264,8 +266,8 @@ void printTree(Node* root, int space) {
 
 // ----------------- Help & Guide ----------------- //
 void printHelp() {
-    printf("Usage: notation_converter --from <infix|prefix|postfix> --to <infix|prefix|postfix> \"EXPRESSION\"\n");
-    printf("Example: ./notation_converter --from postfix --to infix \"3 4 + 5 *\"\n");
+    printf("Usage: nota --from <infix|prefix|postfix> --to <infix|prefix|postfix> \"EXPRESSION\"\n");
+    printf("Example: ./nota --from postfix --to infix \"3 4 + 5 *\"\n");
     printf("Use --guide for more details.\n");
 }
 
@@ -276,7 +278,7 @@ void printGuide() {
     printf("  notation, then traverses the tree to generate the target notation.\n");
     printf("  Supports +, -, *, / operators\n");
     printf("  Operands must be single-digit non-negative integers (0-9)\n");
-    printf("\nUSAGE:\n  notation_converter --from <format> --to <format> \"EXPRESSION\"\n");
+    printf("\nUSAGE:\n  nota --from <format> --to <format> \"EXPRESSION\"\n");
     printf("    Format: infix | prefix | postfix\n");
     printf("\nEXAMPLES:\n");
     printf("  nota --from infix --to postfix \"( 3 + 4 ) * 5\"\n");
