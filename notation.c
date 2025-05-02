@@ -25,7 +25,11 @@ bool isOperator(const char* token) {
 }
 
 bool isOperand(const char* token) {
-    return strlen(token) == 1 && isdigit(token[0]);
+    // Accepts alphanumeric variable names (e.g. x, x1, var, a2, etc.)
+    for (int i = 0; token[i]; i++) {
+        if (!isalnum(token[i])) return false;
+    }
+    return strlen(token) > 0;
 }
 
 bool isValidToken(const char* token) {
@@ -76,12 +80,10 @@ Node* buildTreeFromPostfix(const char* expr) {
     char* tok = strtok(exprCopy, " ");
 
     while (tok) {
-  
         if (!isValidToken(tok)) {
             printf("Error: Invalid token '%s'.\n", tok);
             return NULL;
         }
-
 
         if (isOperator(tok)) {
             Node* right = popNode(&stack);
@@ -254,16 +256,6 @@ void postorder(Node* root) {
     printf("%s ", root->value);
 }
 
-// ----------------- Visual Tree Print ----------------- //
-void printTree(Node* root, int space) {
-    if (!root) return;
-    space += 5;
-    printTree(root->right, space);
-    for (int i = 5; i < space; i++) printf(" ");
-    printf("%s\n", root->value);
-    printTree(root->left, space);
-}
-
 // ----------------- Help & Guide ----------------- //
 void printHelp() {
     printf("Usage: nota --from <infix|prefix|postfix> --to <infix|prefix|postfix> \"EXPRESSION\"\n");
@@ -277,14 +269,13 @@ void printGuide() {
     printf("\nHOW IT WORKS:\n  Converts expressions by building an expression tree from the input\n");
     printf("  notation, then traverses the tree to generate the target notation.\n");
     printf("  Supports +, -, *, / operators\n");
-    printf("  Operands must be single-digit non-negative integers (0-9)\n");
+    printf("  Operands can be variables like x, y, a1, var, etc.\n");
     printf("\nUSAGE:\n  nota --from <format> --to <format> \"EXPRESSION\"\n");
     printf("    Format: infix | prefix | postfix\n");
     printf("\nEXAMPLES:\n");
-    printf("  nota --from infix --to postfix \"( 3 + 4 ) * 5\"\n");
-    printf("  nota --from postfix --to infix \"3 4 +\"\n");
-    printf("  nota --from prefix --to infix \"+ 3 4\"\n");
-
+    printf("  nota --from infix --to postfix \"( x + y ) * z\"\n");
+    printf("  nota --from postfix --to infix \"x y +\"\n");
+    printf("  nota --from prefix --to infix \"+ x y\"\n");
     printf("\nEnsure your input is space-separated.\n");
     printf("\n------------------------------------\n\n");
 }
@@ -325,7 +316,6 @@ int main(int argc, char* argv[]) {
         printHelp();
         return 1;
     }
-    
 
     Node* root = NULL;
     if (strcmp(from, "postfix") == 0) {
@@ -340,9 +330,6 @@ int main(int argc, char* argv[]) {
     }
 
     if (!root) return 1;
-
-    printf("\n--- Expression Tree ---\n");
-    printTree(root, 0);
 
     printf("\n--- Converted Expression (%s) ---\n", to);
     if (strcmp(to, "infix") == 0) inorder(root);
