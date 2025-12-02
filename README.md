@@ -1,56 +1,78 @@
-# Notation Converter
+# notation converter
 
-A command-line utility written in C that converts mathematical expressions between **infix**, **prefix**, and **postfix** notations using an **expression tree**. It supports alphanumeric operands and basic arithmetic operators: `+`, `-`, `*`, `/`.
+a lightweight command-line utility that converts mathematical expressions between infix, prefix, and postfix notations using expression tree algorithms.
 
-## 🔧 How to Build
+> [!NOTE]
+> all input must be space-separated. this is a requirement for proper parsing.
 
-To compile the project, use a C compiler like `gcc`:
+## features
+
+- **three-way conversion**: infix ↔ prefix ↔ postfix
+- **expression tree implementation**: builds and traverses trees for accurate conversion
+- **variable support**: handles alphanumeric operands (e.g., `x`, `y1`, `var`)
+- **basic operators**: supports `+`, `-`, `*`, `/` with proper precedence
+- **zero dependencies**: pure C99 with standard library only
+
+## getting started
+
+### building
+
+compile with any C99-compatible compiler:
 
 ```bash
-gcc -o nota notation_converter.c
+gcc -o nota notation.c
 ```
 
-This will generate an executable named `nota`.
-
-## ▶️ How to Run
-
-Use the following syntax:
+### usage
 
 ```bash
 ./nota --from <infix|prefix|postfix> --to <infix|prefix|postfix> "EXPRESSION"
 ```
 
-### ✅ Examples
+### examples
 
 ```bash
+# convert infix to postfix
 ./nota --from infix --to postfix "( x + y ) * z"
+
+# convert prefix to infix
 ./nota --from prefix --to infix "+ x y"
+
+# convert postfix to prefix
 ./nota --from postfix --to prefix "a b + c *"
 ```
 
-You can also view help and usage guides:
+### help
 
 ```bash
-./nota --help     # Basic usage
-./nota --guide    # Detailed usage with examples
+./nota --help     # quick usage guide
+./nota --guide    # detailed examples and documentation
 ```
 
-## 🧠 Design Choices
+## how it works
 
-- **Expression Tree**: The conversion is done by building an expression tree from the input, then traversing it into the target notation.
-- **Space-separated input**: All tokens (operands, operators, parentheses) must be space-separated.
-- **Stack-based Parsing**: Each notation type is parsed using appropriate stack logic.
-- **Supports Variables**: Operands like `x`, `y1`, `var` are allowed.
+the converter uses a three-step process:
 
-## ⚠️ Limitations
+1. **parse** the input expression into tokens
+2. **build** an expression tree based on the input notation
+3. **traverse** the tree to generate the target notation
 
-- No support for unary operators or functions (e.g., `-x`, `sin(x)`).
-- Parentheses are only handled in **infix** expressions.
-- Input must be **well-formed**; no implicit error recovery.
+each notation format uses appropriate data structures:
+- **postfix**: stack-based construction
+- **prefix**: recursive descent parsing
+- **infix**: shunting-yard algorithm with operator precedence
 
-## 💬 Language and Dependencies
+## limitations
 
-- **Language**: C (Standard C99)
-- **Dependencies**: Standard C Library only (`<stdio.h>`, `<stdlib.h>`, `<string.h>`, etc.)
+- no unary operators (e.g., `-x`, `+5`)
+- no function calls (e.g., `sin(x)`, `sqrt(y)`)
+- parentheses only supported in infix notation
+- requires well-formed input (no error recovery)
 
----
+## contributing
+
+contributions welcome! feel free to open an issue or submit a pull request.
+
+## license
+
+this project is open source and available under the MIT license.
