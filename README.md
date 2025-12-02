@@ -32,21 +32,18 @@ gcc -o nota notation.c
 ### examples
 
 ```bash
-# convert infix to postfix
 ./nota --from infix --to postfix "( x + y ) * z"
 
-# convert prefix to infix
 ./nota --from prefix --to infix "+ x y"
 
-# convert postfix to prefix
 ./nota --from postfix --to prefix "a b + c *"
 ```
 
 ### help
 
 ```bash
-./nota --help     # quick usage guide
-./nota --guide    # detailed examples and documentation
+./nota --help     
+./nota --guide    
 ```
 
 ## how it works
@@ -68,11 +65,3 @@ each notation format uses appropriate data structures:
 - no function calls (e.g., `sin(x)`, `sqrt(y)`)
 - parentheses only supported in infix notation
 - requires well-formed input (no error recovery)
-
-## contributing
-
-contributions welcome! feel free to open an issue or submit a pull request.
-
-## license
-
-this project is open source and available under the MIT license.
